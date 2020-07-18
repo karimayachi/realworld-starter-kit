@@ -8,7 +8,7 @@
     <!-- Import the custom Bootstrap 4 theme from our hosted CDN -->
     <link rel="stylesheet" href="//demo.productionready.io/main.css">
   </head>
-  <body>
+  <body @scope="app">
 
      <nav class="navbar navbar-light">
       <div class="container">
@@ -16,20 +16,20 @@
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
             <!-- Add "active" class when you're on that page" -->
-            <a class="nav-link active" href="">Home</a>
+            <a class="nav-link active" href="#/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" #click="editArticle">
+            <a class="nav-link" href="#/editor">
               <i class="ion-compose"></i>&nbsp;New Post
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" #click="goToSettings">
+            <a class="nav-link" href="#/settings">
               <i class="ion-gear-a"></i>&nbsp;Settings
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" #click="goToLogin">Sign up</a>
+            <a class="nav-link" href="#/login">Sign up</a>
           </li>
         </ul>
       </div>
