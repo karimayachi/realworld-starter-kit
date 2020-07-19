@@ -1,83 +1,66 @@
 <div class="home-page">
 
     <div class="banner">
-      <div class="container">
-        <h1 class="logo-font">conduit</h1>
-        <p>A place to share your knowledge.</p>
-      </div>
+        <div class="container">
+            <h1 class="logo-font">conduit</h1>
+            <p>A place to share your knowledge.</p>
+        </div>
     </div>
-  
+
     <div class="container page">
-      <div class="row">
-  
-        <div class="col-md-9">
-          <div class="feed-toggle">
-            <ul class="nav nav-pills outline-active">
-              <li class="nav-item">
-                <a class="nav-link disabled" href="">Your Feed</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="">Global Feed</a>
-              </li>
-            </ul>
-          </div>
-  
-          <div class="article-preview">
-            <div class="article-meta">
-              <a href="profile.html"><img src="http://i.imgur.com/Qr71crq.jpg" /></a>
-              <div class="info">
-                <a href="" class="author">Eric Simons</a>
-                <span class="date">January 20th</span>
-              </div>
-              <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart"></i> 29
-              </button>
+        <div class="row">
+
+            <div class="col-md-9">
+                <div class="feed-toggle">
+                    <ul class="nav nav-pills outline-active">
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="">Your Feed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="">Global Feed</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="loader" @visible="loadingArticles">Loading...</div>
+
+                <div @foreach="articles">
+                    <div class="article-preview">
+                        <div class="article-meta">
+                            <a href="profile.html" @context="author"><img _src="image" /></a>
+                            <div class="info">
+                                <a href="" class="author" @context="author">${username}</a>
+                                <span class="date">${formattedDate}</span>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm pull-xs-right">
+                                <i class="ion-heart"></i> ${favoritesCount}
+                            </button>
+                        </div>
+                        <a href="#/article/1" class="preview-link">
+                            <h1 @text="title">
+                                <!-- can't use ${title} because the supplied css messes up spans in h1 -->
+                            </h1>
+                            <p>${description}</p>
+                            <span>Read more...</span>
+                        </a>
+                    </div>
+                </div>
+
             </div>
-            <a href="#/article/1" class="preview-link">
-              <h1>How to build webapps that scale</h1>
-              <p>This is the description for the post.</p>
-              <span>Read more...</span>
-            </a>
-          </div>
-  
-          <div class="article-preview">
-            <div class="article-meta">
-              <a href="profile.html"><img src="http://i.imgur.com/N4VcUeJ.jpg" /></a>
-              <div class="info">
-                <a href="" class="author">Albert Pai</a>
-                <span class="date">January 20th</span>
-              </div>
-              <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                <i class="ion-heart"></i> 32
-              </button>
+
+            <div class="col-md-3">
+                <div class="sidebar">
+                    <p>Popular Tags</p>
+
+                    <div class="loader small-loader" @visible="loadingTags">Loading...</div>
+
+                    <div class="tag-list" @foreach="tags">
+                        <a href="" class="tag-pill tag-default">${this}</a>
+                    </div>
+                </div>
             </div>
-            <a href="#/article/2" class="preview-link">
-              <h1>The song you won't ever stop singing. No matter how hard you try.</h1>
-              <p>This is the description for the post.</p>
-              <span>Read more...</span>
-            </a>
-          </div>
-  
+
         </div>
-  
-        <div class="col-md-3">
-          <div class="sidebar">
-            <p>Popular Tags</p>
-  
-            <div class="tag-list">
-              <a href="" class="tag-pill tag-default">programming</a>
-              <a href="" class="tag-pill tag-default">javascript</a>
-              <a href="" class="tag-pill tag-default">emberjs</a>
-              <a href="" class="tag-pill tag-default">angularjs</a>
-              <a href="" class="tag-pill tag-default">react</a>
-              <a href="" class="tag-pill tag-default">mean</a>
-              <a href="" class="tag-pill tag-default">node</a>
-              <a href="" class="tag-pill tag-default">rails</a>
-            </div>
-          </div>
-        </div>
-  
-      </div>
     </div>
-  
-  </div>
+
+</div>
