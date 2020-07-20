@@ -1,4 +1,4 @@
-import { observable } from '../../../Imagine/dist';
+import { observable } from '../../library/imagine';
 
 export class EditArticleViewModel {
     @observable html: string;
