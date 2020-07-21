@@ -1,4 +1,4 @@
-import { observable } from '../../library/imagine';
+import { observable } from 'imagine';
 import { get } from '../helpers/helpers';
 import { Article } from '../model/article';
 

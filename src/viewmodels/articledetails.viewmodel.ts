@@ -1,4 +1,4 @@
-import { observable } from '../../library/imagine';
+import { observable } from 'imagine';
 
 export class ArticleDetailsViewModel {
     @observable html: string;

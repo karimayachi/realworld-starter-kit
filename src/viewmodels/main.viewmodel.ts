@@ -1,4 +1,4 @@
-import { observable } from '../../library/imagine';
+import { observable } from 'imagine';
 import { HomeViewModel } from './home.viewmodel';
 import { LoginViewModel } from './login.viewmodel';
 import { SettingsViewModel } from './settings.viewmodel';

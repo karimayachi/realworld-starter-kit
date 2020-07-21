@@ -1,4 +1,4 @@
-import { observable, computed } from '../../library/imagine';
+import { observable, computed } from 'imagine';
 import { User } from './user';
 
 export class Article {

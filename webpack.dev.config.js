@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = [
   {
     mode: 'development',
@@ -14,7 +16,10 @@ module.exports = [
       }]
     },
     resolve: {
-      extensions: ['.ts', '.tsx', '.js']
+      extensions: ['.ts', '.tsx', '.js'],
+      alias: {
+        imagine: path.resolve(__dirname, 'library/imagine.js')
+      }
     },
     output: {
       path: __dirname + '/dist',
