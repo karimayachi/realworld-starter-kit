@@ -10,7 +10,7 @@ export function get<T extends Array<any> | any>(endpoint: string, ctor?: new () 
         if (property) {
             data = data[property];
         }
-
+        
         if (Array.isArray(data)) {
             let items: any[] = [];
             for (let i = 0; i < data.length; i++) {
@@ -31,7 +31,7 @@ export function get<T extends Array<any> | any>(endpoint: string, ctor?: new () 
                 let item: any = new ctor();
                 deepCopyProperties(data, item);
 
-                return new ctor();
+                return item;
             }
             else {
                 return data;
