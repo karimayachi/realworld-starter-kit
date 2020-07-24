@@ -27,9 +27,9 @@
                 <div @foreach="articles">
                     <div class="article-preview">
                         <div class="article-meta">
-                            <a href="profile.html" @context="author"><img _src="image" /></a>
+                            <a href="profile.html"><img _src="author.image" /></a>
                             <div class="info">
-                                <a href="" class="author" @context="author">${username}</a>
+                                <a href="" class="author">${author.username}</a>
                                 <span class="date">${formattedDate}</span>
                             </div>
                             <button class="btn btn-outline-primary btn-sm pull-xs-right">
