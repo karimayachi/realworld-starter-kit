@@ -18,7 +18,7 @@ module.exports = [
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
       alias: {
-        imagine: path.resolve(__dirname, '../Imagine/dist/index.js')
+        imagine: path.resolve(__dirname, './library/imagine.js')
       }
     },
     output: {

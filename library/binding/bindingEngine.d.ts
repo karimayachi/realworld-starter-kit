@@ -8,9 +8,12 @@ export declare class BindingEngine {
     boundElements: WeakMap<HTMLElement, Map<string, BindingContext>>;
     scopes: Map<string, any>;
     constructor();
-    parseBinding: (name: string, value: string, vm: any) => BindingProperties | null;
-    bindInitPhase: (element: HTMLElement, bindingProperties: BindingProperties, vm: any) => void;
-    bindUpdatePhase: (element: HTMLElement, bindingProperties: BindingProperties, vm: any) => void;
+    parseBinding: (name: string, value: string, node: HTMLElement, vm: any) => BindingProperties | null;
+    private resolveScopeAndCreateDependencyTree;
+    private recursiveResolveScope;
+    private rebind;
+    bindInitPhase: (bindingProperties: BindingProperties, vm: any, rebind?: boolean) => void;
+    bindUpdatePhase: (bindingProperties: BindingProperties, vm: any) => void;
     private unwrap;
 }
 export interface BindingProperties {
@@ -18,5 +21,6 @@ export interface BindingProperties {
     parameter: string;
     propertyName: string;
     bindingValue: any;
+    element: HTMLElement;
 }
 export {};
