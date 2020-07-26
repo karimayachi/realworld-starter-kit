@@ -21,7 +21,7 @@ export class ArticleDetailsViewModel {
             this.article = article;
         });
 
-        get<Comment[]>(`/articles/${slug}/comments`, Comment, 'article').then((comments: Comment[]): void => {
+        get<Comment[]>(`/articles/${slug}/comments`, Comment, 'comments').then((comments: Comment[]): void => {
             this.comments = comments;
         });
     }

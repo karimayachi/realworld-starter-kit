@@ -6,7 +6,6 @@ export function get<T extends Array<any> | any>(endpoint: string, ctor?: new () 
     return fetch(baseURL + endpoint).then((response: Response): Promise<any> => {
         return response.json();
     }).then((data: any): T => {
-
         if (property) {
             data = data[property];
         }
