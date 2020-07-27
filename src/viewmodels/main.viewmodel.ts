@@ -7,9 +7,11 @@ import { ArticleDetailsViewModel } from './articledetails.viewmodel';
 
 export class MainViewModel {
     @observable currentViewModel: any;
-    @observable routes: Map<string, new (...args: any) => any>
+    @observable routes: Map<string, new (...args: any) => any>;
+    @observable loggedIn: boolean;
 
     constructor() {
+        this.loggedIn = false;
         this.currentViewModel = new HomeViewModel();
         this.routes = new Map<string, new (...args: any) => any>();
 
@@ -28,5 +30,9 @@ export class MainViewModel {
                 this.currentViewModel = new (this.routes.get(route)!)(...params);
             }
         });
+    }
+
+    login = (): void => {
+        this.loggedIn = true;
     }
 }
