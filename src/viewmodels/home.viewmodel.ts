@@ -9,6 +9,7 @@ export class HomeViewModel {
     @observable articles: Article[];
     @observable totalArticles: number;
     @observable tags: string[];
+    @observable filter: string;
     @observable currentPage: number;
 
     @observable loadingArticles: boolean;
@@ -19,6 +20,7 @@ export class HomeViewModel {
         this.articles = [];
         this.totalArticles = 0;
         this.currentPage = 0;
+        this.filter = '';
         this.tags = [];
         this.loadingArticles = true;
         this.loadingTags = true;
@@ -29,7 +31,7 @@ export class HomeViewModel {
             });
         });
 
-        this.getArticles(0);
+        this.getArticles();
 
         get<string[]>('/tags', undefined, 'tags').then((tags: string[]): void => {
             this.tags = tags;
@@ -47,17 +49,29 @@ export class HomeViewModel {
         return pages;
     };
 
-    public goToPage = (pageItem: { number: number, active: boolean }): void => {
-        this.currentPage = pageItem.number - 1;
-        this.getArticles(pageItem.number - 1);
+    public clearFilter = (): void => {
+        this.currentPage = 0;
+        this.filter = '';
+        this.getArticles()
     }
 
-    private getArticles = (page: number): void => {
+    public filterOnTag = (tag: string): void => {
+        this.currentPage = 0;
+        this.filter = tag;
+        this.getArticles()
+    }
+
+    public goToPage = (pageItem: { number: number, active: boolean }): void => {
+        this.currentPage = pageItem.number - 1;
+        this.getArticles();
+    }
+
+    private getArticles = (): void => {
         this.loadingArticles = true;
-        let offset: number = page * PAGE_SIZE;
+        let offset: number = this.currentPage * PAGE_SIZE;
 
         /* don't use the get-helper, because we also need 'articlesCount' in the same pass.. Maybe refactor helper later to support this */
-        fetch(`https://conduit.productionready.io/api/articles?limit=10&offset=${offset}`).then((response: Response): Promise<any> => {
+        fetch(`https://conduit.productionready.io/api/articles?limit=10&offset=${offset}${this.filter ? '&tag=' + this.filter : ''}`).then((response: Response): Promise<any> => {
             return response.json();
         }).then((data: any): void => {
             this.totalArticles = data.articlesCount;

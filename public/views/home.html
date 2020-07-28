@@ -17,7 +17,10 @@
                             <a class="nav-link disabled" href="">Your Feed</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="">Global Feed</a>
+                            <a _class="filter ? 'nav-link' : 'nav-link active'" href="#" #click="clearFilter">Global Feed</a>
+                        </li>
+                        <li class="nav-item" @if="filter">
+                            <a class="nav-link active" href="#"># ${filter}</a>
                         </li>
                     </ul>
                 </div>
@@ -62,7 +65,7 @@
                     <div class="loader small-loader" @visible="loadingTags">Loading...</div>
 
                     <div class="tag-list" @foreach="tags">
-                        <a href="" class="tag-pill tag-default">${this}</a>
+                        <a href="#" class="tag-pill tag-default" #click="home.filterOnTag">${this}</a>
                     </div>
                 </div>
             </div>
