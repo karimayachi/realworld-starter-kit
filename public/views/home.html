@@ -1,4 +1,4 @@
-<div class="home-page">
+<div class="home-page" @scope="home">
 
     <div class="banner">
         <div class="container">
@@ -24,7 +24,7 @@
 
                 <div class="loader" @visible="loadingArticles">Loading...</div>
 
-                <div @foreach="articles">
+                <div @foreach="articles" @visible="!loadingArticles">
                     <div class="article-preview">
                         <div class="article-meta">
                             <a href="profile.html"><img _src="author.image" /></a>
@@ -46,6 +46,13 @@
                     </div>
                 </div>
 
+                <nav>
+                    <ul class="pagination" @foreach="pages">
+                        <li _class="active ? 'page-item active' : 'page-item'" #click="home.goToPage">
+                            <a class="page-link" href="#">${number}</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
 
             <div class="col-md-3">

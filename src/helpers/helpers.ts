@@ -39,7 +39,7 @@ export function get<T extends Array<any> | any>(endpoint: string, ctor?: new () 
     });
 }
 
-function deepCopyProperties(a: any, b: any): void {
+export function deepCopyProperties(a: any, b: any): void {
     for (let key of Object.getOwnPropertyNames(b)) {
         if (!a[key]) continue;
 
