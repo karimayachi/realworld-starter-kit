@@ -1,33 +1,44 @@
-<div class="home-page" @scope="home">
+<div class="profile-page" @scope="profile">
 
-    <div class="banner">
+    <div class="user-info" @context="profile">
         <div class="container">
-            <h1 class="logo-font">conduit</h1>
-            <p>A place to share your knowledge.</p>
+            <div class="row">
+
+                <div class="col-xs-12 col-md-10 offset-md-1">
+                    <img _src="image" class="user-img" />
+                    <h4>${username}</h4>
+                    <p>
+                        ${bio}
+                    </p>
+                    <button class="btn btn-sm btn-outline-secondary action-btn">
+                        <i class="ion-plus-round"></i>
+                        &nbsp;
+                        Follow ${username}
+                    </button>
+                </div>
+
+            </div>
         </div>
     </div>
 
-    <div class="container page">
+    <div class="container">
         <div class="row">
 
-            <div class="col-md-9">
-                <div class="feed-toggle">
+            <div class="col-xs-12 col-md-10 offset-md-1">
+                <div class="articles-toggle">
                     <ul class="nav nav-pills outline-active">
-                        <li class="nav-item" @if="app.loggedIn">
-                            <a class="nav-link disabled" href="">Your Feed</a>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="">My Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a _class="filter ? 'nav-link' : 'nav-link active'" href="#" #click="clearFilter">Global Feed</a>
-                        </li>
-                        <li class="nav-item" @if="filter">
-                            <a class="nav-link active" href="#"># ${filter}</a>
+                            <a class="nav-link" href="">Favorited Articles</a>
                         </li>
                     </ul>
                 </div>
 
-                <div class="loader" @visible="loadingArticles">Loading...</div>
+                <div class="loader" @visible="loading">Loading...</div>
 
-                <div @foreach="articles" @visible="!loadingArticles">
+                <div @foreach="articles" @visible="!loading">
                     <div class="article-preview">
                         <div class="article-meta">
                             <a _href="'#/profile/' + author.username"><img _src="author.image" /></a>
@@ -51,25 +62,12 @@
 
                 <nav>
                     <ul class="pagination" @foreach="pages">
-                        <li _class="active ? 'page-item active' : 'page-item'" #click="home.goToPage">
+                        <li _class="active ? 'page-item active' : 'page-item'" #click="profile.goToPage">
                             <a class="page-link" href="#">${number}</a>
                         </li>
                     </ul>
                 </nav>
             </div>
-
-            <div class="col-md-3">
-                <div class="sidebar">
-                    <p>Popular Tags</p>
-
-                    <div class="loader small-loader" @visible="loadingTags">Loading...</div>
-
-                    <div class="tag-list" @foreach="tags">
-                        <a href="#" class="tag-pill tag-default" #click="home.filterOnTag">${this}</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
