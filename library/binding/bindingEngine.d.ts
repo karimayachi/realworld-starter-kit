@@ -12,14 +12,15 @@ export declare class BindingEngine {
     private resolveScopeAndCreateDependencyTree;
     private recursiveResolveScope;
     private rebind;
-    bindInitPhase: (bindingProperties: BindingProperties, vm: any, rebind?: boolean) => void;
-    bindUpdatePhase: (bindingProperties: BindingProperties, vm: any) => void;
+    bindInitPhase: (bindingProperties: BindingProperties, rebind?: boolean) => void;
+    bindUpdatePhase: (bindingProperties: BindingProperties) => void;
     private unwrap;
 }
 export interface BindingProperties {
     handler: string;
     parameter: string;
     propertyName: string;
+    scope: any;
     bindingValue: any;
     element: HTMLElement;
 }
