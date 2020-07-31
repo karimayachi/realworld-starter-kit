@@ -17,7 +17,8 @@
                             <a class="nav-link disabled" href="">Your Feed</a>
                         </li>
                         <li class="nav-item">
-                            <a _class="filter ? 'nav-link' : 'nav-link active'" href="#" #click="clearFilter">Global Feed</a>
+                            <a _class="filter ? 'nav-link' : 'nav-link active'" href="#" #click="clearFilter">Global
+                                Feed</a>
                         </li>
                         <li class="nav-item" @if="filter">
                             <a class="nav-link active" href="#"># ${filter}</a>
@@ -45,6 +46,12 @@
                             </h1>
                             <p>${description}</p>
                             <span>Read more...</span>
+                            
+                            <ul class="tag-list" @foreach="tagList">
+                                <li class="tag-default tag-pill tag-outline">
+                                    ${this}
+                                </li>
+                            </ul>
                         </a>
                     </div>
                 </div>

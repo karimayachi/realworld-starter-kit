@@ -13,7 +13,6 @@ export class MainViewModel {
 
     constructor() {
         this.loggedIn = false;
-        this.currentViewModel = new HomeViewModel();
         this.routes = new Map<string, new (...args: any) => any>();
 
         this.routes.set('',  HomeViewModel);
@@ -29,7 +28,7 @@ export class MainViewModel {
 
     private changeView = (_event?: PopStateEvent): void => {
         let hash: string[] = window.location.hash.split('/');
-        let route: string = hash[1];
+        let route: string = hash[1] || '';
         let params: string[] = hash.slice(2);
 
         if(this.routes.has(route)) {

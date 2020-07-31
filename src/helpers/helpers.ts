@@ -9,7 +9,7 @@ export function get<T extends Array<any> | any>(endpoint: string, ctor?: new () 
         if (property) {
             data = data[property];
         }
-        
+
         if (Array.isArray(data)) {
             let items: any[] = [];
             for (let i = 0; i < data.length; i++) {
@@ -40,17 +40,24 @@ export function get<T extends Array<any> | any>(endpoint: string, ctor?: new () 
 }
 
 export function deepCopyProperties(a: any, b: any): void {
-    for (let key of Object.getOwnPropertyNames(b)) {
-        if (!a[key]) continue;
+    if (Array.isArray(b)) {
+        for (let i = 0; i < a.length; i++) {
+            b[i] = a[i];
+        }
+    }
+    else {
+        for (let key of Object.getOwnPropertyNames(b)) {
+            if (!a[key]) continue;
 
-        if (b[key] instanceof Date) {
-            (<Date>b[key]).setTime(Date.parse(a[key]));
-        }
-        else if (typeof b[key] === 'object') {
-            deepCopyProperties(a[key], b[key]);
-        }
-        else {
-            b[key] = a[key];
+            if (b[key] instanceof Date) {
+                (<Date>b[key]).setTime(Date.parse(a[key]));
+            }
+            else if (typeof b[key] === 'object') {
+                deepCopyProperties(a[key], b[key]);
+            }
+            else {
+                b[key] = a[key];
+            }
         }
     }
 }

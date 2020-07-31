@@ -33,6 +33,12 @@
             <div class="col-md-12">
                 ${article.body}
             </div>
+
+            <ul class="tag-list" @foreach="article.tagList">
+                <li class="tag-default tag-pill tag-outline">
+                    ${this}
+                </li>
+            </ul>
         </div>
 
         <hr />

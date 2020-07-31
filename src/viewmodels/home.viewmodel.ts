@@ -61,7 +61,8 @@ export class HomeViewModel {
         this.getArticles()
     }
 
-    public goToPage = (pageItem: { number: number, active: boolean }): void => {
+    public goToPage = (pageItem: { number: number, active: boolean }, event: Event): void => {
+        event.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
         this.currentPage = pageItem.number - 1;
         this.getArticles();
     }

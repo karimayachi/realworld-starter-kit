@@ -6,6 +6,7 @@ export class Article {
     @observable title: string;
     @observable description: string;
     @observable body: string;
+    @observable tagList: string[];
     @observable favoritesCount: number;
     @observable createdAt: Date;
     @observable author: User;
@@ -15,6 +16,7 @@ export class Article {
         this.title = '';
         this.description = '';
         this.body = '';
+        this.tagList = [];
         this.favoritesCount = 0;
         this.createdAt = new Date();
         this.author = new User();
