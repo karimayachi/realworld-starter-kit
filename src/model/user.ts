@@ -6,10 +6,10 @@ export class User {
     @observable image: string;
     @observable following: boolean;
 
-    constructor() {
-        this.username = '';
-        this.bio = '';
-        this.image = '';
-        this.following = false;
+    constructor(data?: any) {
+        this.username = data?.username ?? '';
+        this.bio = data?.bio ?? '';
+        this.image = data?.image ?? '';
+        this.following = data?.following ?? false;
     }
 }

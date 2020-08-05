@@ -1,9 +1,18 @@
+import { TOKEN_IDENTIFIER } from '../index';
+
 const baseURL: string = 'https://conduit.productionready.io/api';
 
 /* todo: fix typing so T is an instance of array of type ctor... don't know how.. stupid Typescript :-( */
 export function get<T extends Array<any> | any>(endpoint: string, ctor?: new () => any, property?: string): Promise<T> {
+    let options: RequestInit = {};
 
-    return fetch(baseURL + endpoint).then((response: Response): Promise<any> => {
+    if(localStorage.getItem(TOKEN_IDENTIFIER) !== null) {
+        options.headers = new Headers({
+            'Authorization': 'Token ' + localStorage.getItem(TOKEN_IDENTIFIER)
+        })
+    }
+
+    return fetch(baseURL + endpoint, options).then((response: Response): Promise<any> => {
         return response.json();
     }).then((data: any): T => {
         if (property) {
@@ -60,4 +69,21 @@ export function deepCopyProperties(a: any, b: any): void {
             }
         }
     }
+}
+
+export function post(endpoint: string, data: any): Promise<any> {
+    let options: RequestInit =  {
+        method: 'post',
+        headers: new Headers({
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        }),
+        body: JSON.stringify(data)
+    };
+
+    if(localStorage.getItem(TOKEN_IDENTIFIER) !== null) {
+        (<Headers>options.headers).append('Authorization', 'Token ' + localStorage.getItem(TOKEN_IDENTIFIER));
+    }
+
+    return fetch(baseURL + endpoint, options).then((response: Response): Promise<any> => response.json());
 }
