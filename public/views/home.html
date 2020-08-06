@@ -1,9 +1,11 @@
 <div class="home-page" @scope="home">
 
-    <div class="banner">
-        <div class="container">
-            <h1 class="logo-font">conduit</h1>
-            <p>A place to share your knowledge.</p>
+    <div @if="!app.loggedIn">
+        <div class="banner">
+            <div class="container">
+                <h1 class="logo-font">conduit</h1>
+                <p>A place to share your knowledge.</p>
+            </div>
         </div>
     </div>
 
@@ -13,11 +15,12 @@
             <div class="col-md-9">
                 <div class="feed-toggle">
                     <ul class="nav nav-pills outline-active">
-                        <li class="nav-item" @if="app.loggedIn">
-                            <a class="nav-link disabled" href="">Your Feed</a>
+                        <li class="nav-item">
+                            <a _class="showFeed ? 'nav-link active' : 'nav-link'" href="#" #click="goToFeed">Your
+                                Feed</a>
                         </li>
                         <li class="nav-item">
-                            <a _class="filter ? 'nav-link' : 'nav-link active'" href="#" #click="clearFilter">Global
+                            <a _class="showGlobal ? 'nav-link active' : 'nav-link'" href="#" #click="clearFilter">Global
                                 Feed</a>
                         </li>
                         <li class="nav-item" @if="filter">
@@ -46,7 +49,7 @@
                             </h1>
                             <p>${description}</p>
                             <span>Read more...</span>
-                            
+
                             <ul class="tag-list" @foreach="tagList">
                                 <li class="tag-default tag-pill tag-outline">
                                     ${this}
@@ -56,7 +59,11 @@
                     </div>
                 </div>
 
-                <nav>
+                <div class="article-preview" @if="articles.length == 0" @visible="!loadingArticles">
+                    No articles are here... yet.
+                </div>
+
+                <nav @visible="!loadingArticles">
                     <ul class="pagination" @foreach="pages">
                         <li _class="active ? 'page-item active' : 'page-item'" #click="home.goToPage">
                             <a class="page-link" href="#">${number}</a>
