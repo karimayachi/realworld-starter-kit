@@ -72,8 +72,16 @@ export function deepCopyProperties(a: any, b: any): void {
 }
 
 export function post(endpoint: string, data: any): Promise<any> {
+    return send(endpoint, 'post', data);
+}
+
+export function put(endpoint: string, data: any): Promise<any> {
+    return send(endpoint, 'put', data);
+}
+
+function send(endpoint: string, method: string, data: any): Promise<any> {
     let options: RequestInit =  {
-        method: 'post',
+        method: method,
         headers: new Headers({
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'

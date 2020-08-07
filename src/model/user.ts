@@ -2,6 +2,7 @@ import { observable } from 'imagine';
 
 export class User {
     @observable username: string;
+    @observable email: string;
     @observable bio: string;
     @observable image: string;
     @observable following: boolean;
@@ -11,5 +12,6 @@ export class User {
         this.bio = data?.bio ?? '';
         this.image = data?.image ?? '';
         this.following = data?.following ?? false;
+        this.email = data?.email ?? '';
     }
 }
