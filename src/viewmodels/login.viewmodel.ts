@@ -6,14 +6,16 @@ import { User } from '../model/user';
 export class LoginViewModel {
     @observable html: string;
     @observable signup: boolean;
+    @observable username: string;
     @observable email: string;
     @observable password: string;
     @observable errorMessages: string[];
 
-    constructor() {
+    constructor(signup?: string) {
         this.html = '';
-        this.signup = false;
+        this.signup = signup === 'register';
         this.email = '';
+        this.username = '';
         this.password = '';
         this.errorMessages = [];
 
@@ -45,6 +47,34 @@ export class LoginViewModel {
             }
             
             this.errorMessages = ['Invalid username or password'];
+        });
+    }
+
+    register = (): void => {
+        if (this.username === '' || this.email === '' || this.password === '') {
+            this.errorMessages = ['Please fill in all fields'];
+            return;
+        }
+
+        this.errorMessages = [];
+
+        post('/users', { 
+            user: { 
+                username: this.username,
+                email: this.email, 
+                password: this.password 
+            } 
+        }).then((data: any) => {
+            if(data.user) {
+                localStorage.setItem(TOKEN_IDENTIFIER, data.user.token);
+                app.user = new User(data.user);
+                document.location.href = '/#/';
+            }
+            else if(data.errors) {
+                for(let error in data.errors) {
+                    this.errorMessages.push(`${error}: ${data.errors[error]}`);
+                }
+            }
         });
     }
 }

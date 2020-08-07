@@ -5,7 +5,7 @@
       <div class="col-md-6 offset-md-3 col-xs-12">
         <h1 class="text-xs-center">${signup ? 'Sign up' : 'Sign in'}</h1>
         <p class="text-xs-center">
-          <a _href="signup ? '/#/signin' : '/#/signup'">${signup ? 'Have an account?' : 'Need an account?'}</a>
+          <a _href="signup ? '/#/login' : '/#/register'">${signup ? 'Have an account?' : 'Need an account?'}</a>
         </p>
 
         <ul class="error-messages" @foreach="errorMessages">
@@ -14,7 +14,7 @@
 
         <form>
           <fieldset class="form-group" @if="signup">
-            <input class="form-control form-control-lg" type="text" placeholder="Your Name">
+            <input class="form-control form-control-lg" type="text" placeholder="Your Name" @value="username">
           </fieldset>
           <fieldset class="form-group">
             <input class="form-control form-control-lg" type="text" placeholder="Email" @value="email">
@@ -24,7 +24,7 @@
           </fieldset>
 
           <div @if="signup">
-            <button class="btn btn-lg btn-primary pull-xs-right" type="button">
+            <button class="btn btn-lg btn-primary pull-xs-right" #click="register" type="button">
               Sign up
             </button>
           </div>
