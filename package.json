@@ -25,6 +25,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "mobx": "^5.15.4"
+    "@types/showdown": "^1.9.3",
+    "mobx": "^5.15.4",
+    "showdown": "^1.9.1"
   }
 }

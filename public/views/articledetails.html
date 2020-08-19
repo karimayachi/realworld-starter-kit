@@ -36,9 +36,10 @@
     <div class="container page">
 
         <div class="row article-content">
-            <div class="col-md-12">
-                ${article.body}
-            </div>
+            <imagine-transform target="html" transform="markdownToHTML">
+                <div class="col-md-12" @html="article.body">
+                </div>
+            </imagine-transform>
 
             <ul class="tag-list" @foreach="article.tagList">
                 <li class="tag-default tag-pill tag-outline">
