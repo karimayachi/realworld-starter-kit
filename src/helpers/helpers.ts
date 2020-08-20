@@ -79,6 +79,10 @@ export function put(endpoint: string, data: any): Promise<any> {
     return send(endpoint, 'put', data);
 }
 
+export function del(endpoint: string): Promise<any> {
+    return send(endpoint, 'delete', {});
+}
+
 function send(endpoint: string, method: string, data: any): Promise<any> {
     let options: RequestInit =  {
         method: method,

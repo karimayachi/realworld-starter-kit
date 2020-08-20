@@ -1,4 +1,4 @@
-<div class="article-page">
+<div class="article-page" @scope="editPage">
 
     <div class="banner" @context="article">
         <div class="container">
@@ -11,23 +11,26 @@
                     <a href="" class="author">${author.username}</a>
                     <span class="date">${formattedDate}</span>
                 </div>
-                <button class="btn btn-sm btn-outline-secondary">
-                    <i class="ion-plus-round"></i>
+
+                <div @if="!editPage.articleByMe" style="display: inline-block">
+                    <button class="btn btn-sm btn-outline-secondary">
+                        <i class="ion-plus-round"></i>&nbsp; Follow ${author.username} <span class="counter">(10)</span>
+                    </button>
                     &nbsp;
-                    Follow ${author.username} <span class="counter">(10)</span>
-                </button>
-                &nbsp;&nbsp;
-                <button class="btn btn-sm btn-outline-primary">
-                    <i class="ion-heart"></i>
+                    <button class="btn btn-sm btn-outline-primary">
+                        <i class="ion-heart"></i>&nbsp; Favorite Post <span class="counter">(29)</span>
+                    </button>
+                </div>
+
+                <div @if="editPage.articleByMe" style="display: inline-block">
+                    <a class="btn btn-outline-secondary btn-sm" _href="'#/editor/' + slug">
+                        <i class="ion-edit"></i> Edit Article
+                    </a>
                     &nbsp;
-                    Favorite Post <span class="counter">(29)</span>
-                </button>
-                <a class="btn btn-outline-secondary btn-sm" _href="'#/editor/' + slug">
-                    <i class="ion-edit"></i> Edit Article
-                </a>
-                <button class="btn btn-outline-danger btn-sm">
-                    <i class="ion-trash-a"></i> Delete Article
-                </button>
+                    <button class="btn btn-outline-danger btn-sm" #click="editPage.deleteArticle">
+                        <i class="ion-trash-a"></i> Delete Article
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -58,24 +61,32 @@
                     <span class="date">${formattedDate}</span>
                 </div>
 
-                <button class="btn btn-sm btn-outline-secondary">
-                    <i class="ion-plus-round"></i>
+
+
+                <div @if="!editPage.articleByMe" style="display: inline-block">
+                    <button class="btn btn-sm btn-outline-secondary">
+                        <i class="ion-plus-round"></i>&nbsp; Follow ${author.username} <span class="counter">(10)</span>
+                    </button>
                     &nbsp;
-                    Follow ${author.username} <span class="counter">(10)</span>
-                </button>
-                &nbsp;
-                <button class="btn btn-sm btn-outline-primary">
-                    <i class="ion-heart"></i>
+                    <button class="btn btn-sm btn-outline-primary">
+                        <i class="ion-heart"></i>&nbsp; Favorite Post <span class="counter">(29)</span>
+                    </button>
+                </div>
+
+                <div @if="editPage.articleByMe" style="display: inline-block">
+                    <a class="btn btn-outline-secondary btn-sm" _href="'#/editor/' + slug">
+                        <i class="ion-edit"></i> Edit Article
+                    </a>
                     &nbsp;
-                    Favorite Post <span class="counter">(29)</span>
-                </button>
+                    <button class="btn btn-outline-danger btn-sm" #click="editPage.deleteArticle">
+                        <i class="ion-trash-a"></i> Delete Article
+                    </button>
+                </div>
             </div>
         </div>
 
         <div class="row">
-
             <div class="col-xs-12 col-md-8 offset-md-2">
-
                 <div @if="!app.loggedIn">
                     <p>
                         <a href="#/login">Sign in</a> or <a href="#/register">sign up</a> to add comments on this
@@ -89,7 +100,7 @@
                             <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
                         </div>
                         <div class="card-footer">
-                            <img src="http://i.imgur.com/Qr71crq.jpg" class="comment-author-img" />
+                            <img _src="app.user.image" class="comment-author-img" />
                             <button class="btn btn-sm btn-primary">
                                 Post Comment
                             </button>

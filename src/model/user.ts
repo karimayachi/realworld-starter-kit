@@ -10,7 +10,7 @@ export class User {
     constructor(data?: any) {
         this.username = data?.username ?? '';
         this.bio = data?.bio ?? '';
-        this.image = data?.image ?? '';
+        this.image = data?.image ?? 'https://static.productionready.io/images/smiley-cyrus.jpg';
         this.following = data?.following ?? false;
         this.email = data?.email ?? '';
     }

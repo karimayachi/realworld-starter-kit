@@ -1,7 +1,8 @@
-import { observable } from 'imagine';
-import { get } from '../helpers/helpers';
+import { observable, computed } from 'imagine';
+import { get, del } from '../helpers/helpers';
 import { Article } from '../model/article';
 import { Comment } from '../model/comment';
+import { app } from '../index';
 import { Converter } from 'showdown';
 
 export class ArticleDetailsViewModel {
@@ -25,6 +26,16 @@ export class ArticleDetailsViewModel {
 
         get<Comment[]>(`/articles/${slug}/comments`, Comment, 'comments').then((comments: Comment[]): void => {
             this.comments = comments;
+        });
+    }
+
+    @computed get articleByMe(): boolean {
+        return app.user?.username === this.article?.author.username;
+    }
+
+    deleteArticle = (): void => {
+        del('/articles/' + this.article?.slug).then((): void =>{
+            document.location.href = '/#/';
         });
     }
 
