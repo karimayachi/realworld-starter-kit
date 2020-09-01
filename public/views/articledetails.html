@@ -1,4 +1,4 @@
-<div class="article-page" @scope="editPage">
+<div class="article-page" @scope="detailPage">
 
     <div class="banner" @context="article">
         <div class="container">
@@ -12,22 +12,22 @@
                     <span class="date">${formattedDate}</span>
                 </div>
 
-                <div @if="!editPage.articleByMe" style="display: inline-block">
-                    <button class="btn btn-sm btn-outline-secondary">
-                        <i class="ion-plus-round"></i>&nbsp; Follow ${author.username} <span class="counter">(10)</span>
+                <div @if="!detailPage.articleByMe" style="display: inline-block">
+                    <button class="btn btn-sm btn-outline-secondary" #click="detailPage.followAuthor">
+                        <i class="ion-plus-round"></i>&nbsp; Follow ${author.username}
                     </button>
                     &nbsp;
-                    <button class="btn btn-sm btn-outline-primary">
-                        <i class="ion-heart"></i>&nbsp; Favorite Post <span class="counter">(29)</span>
+                    <button class="btn btn-sm btn-outline-primary" #click="detailPage.favoriteArticle">
+                        <i class="ion-heart"></i>&nbsp; Favorite Post <span class="counter">(${favoritesCount})</span>
                     </button>
                 </div>
 
-                <div @if="editPage.articleByMe" style="display: inline-block">
+                <div @if="detailPage.articleByMe" style="display: inline-block">
                     <a class="btn btn-outline-secondary btn-sm" _href="'#/editor/' + slug">
                         <i class="ion-edit"></i> Edit Article
                     </a>
                     &nbsp;
-                    <button class="btn btn-outline-danger btn-sm" #click="editPage.deleteArticle">
+                    <button class="btn btn-outline-danger btn-sm" #click="detailPage.deleteArticle">
                         <i class="ion-trash-a"></i> Delete Article
                     </button>
                 </div>
@@ -63,22 +63,22 @@
 
 
 
-                <div @if="!editPage.articleByMe" style="display: inline-block">
-                    <button class="btn btn-sm btn-outline-secondary">
-                        <i class="ion-plus-round"></i>&nbsp; Follow ${author.username} <span class="counter">(10)</span>
+                <div @if="!detailPage.articleByMe" style="display: inline-block">
+                    <button class="btn btn-sm btn-outline-secondary" #click="detailPage.followAuthor">
+                        <i class="ion-plus-round"></i>&nbsp; Follow ${author.username}
                     </button>
                     &nbsp;
-                    <button class="btn btn-sm btn-outline-primary">
-                        <i class="ion-heart"></i>&nbsp; Favorite Post <span class="counter">(29)</span>
+                    <button class="btn btn-sm btn-outline-primary" #click="detailPage.favoriteArticle">
+                        <i class="ion-heart"></i>&nbsp; Favorite Post <span class="counter">(${favoritesCount})</span>
                     </button>
                 </div>
 
-                <div @if="editPage.articleByMe" style="display: inline-block">
+                <div @if="detailPage.articleByMe" style="display: inline-block">
                     <a class="btn btn-outline-secondary btn-sm" _href="'#/editor/' + slug">
                         <i class="ion-edit"></i> Edit Article
                     </a>
                     &nbsp;
-                    <button class="btn btn-outline-danger btn-sm" #click="editPage.deleteArticle">
+                    <button class="btn btn-outline-danger btn-sm" #click="detailPage.deleteArticle">
                         <i class="ion-trash-a"></i> Delete Article
                     </button>
                 </div>
@@ -97,11 +97,11 @@
                 <div @if="app.loggedIn">
                     <form class="card comment-form">
                         <div class="card-block">
-                            <textarea class="form-control" placeholder="Write a comment..." rows="3"></textarea>
+                            <textarea class="form-control" placeholder="Write a comment..." rows="3" @value="newComment.body"></textarea>
                         </div>
                         <div class="card-footer">
                             <img _src="app.user.image" class="comment-author-img" />
-                            <button class="btn btn-sm btn-primary">
+                            <button class="btn btn-sm btn-primary" #click="postComment" type="button">
                                 Post Comment
                             </button>
                         </div>
@@ -120,9 +120,8 @@
                             &nbsp;
                             <a href="" class="comment-author">${author.username}</a>
                             <span class="date-posted">${formattedDate}</span>
-                            <span class="mod-options">
-                                <i class="ion-edit"></i>
-                                <i class="ion-trash-a"></i>
+                            <span class="mod-options" @if="commentByMe">
+                                <i class="ion-trash-a" #click="detailPage.deleteComment"></i>
                             </span>
                         </div>
                     </div>

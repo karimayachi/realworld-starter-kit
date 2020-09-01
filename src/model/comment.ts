@@ -1,5 +1,6 @@
 import { observable, computed } from 'imagine';
 import { User } from './user';
+import { app } from '../index';
 
 export class Comment {
     @observable id: number;
@@ -16,5 +17,9 @@ export class Comment {
 
     @computed get formattedDate(): string {
         return this.createdAt.toDateString();
+    }
+
+    @computed get commentByMe(): boolean {
+        return app.user?.username === this.author.username;
     }
 }
