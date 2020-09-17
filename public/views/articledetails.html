@@ -13,13 +13,13 @@
                 </div>
 
                 <div @if="!detailPage.articleByMe" style="display: inline-block">
-                    <button class="btn btn-sm btn-outline-secondary" #click="detailPage.followAuthor">
-                        <i class="ion-plus-round"></i>&nbsp; Follow ${author.username}
-                    </button>
-                    &nbsp;
-                    <button class="btn btn-sm btn-outline-primary" #click="detailPage.favoriteArticle">
-                        <i class="ion-heart"></i>&nbsp; Favorite Post <span class="counter">(${favoritesCount})</span>
-                    </button>
+                    <toggle-button :active="author.following" :title="'Follow ' + author.username" :activetitle="'Unfollow ' + author.username" class="subtle" #click="detailPage.followAuthor">
+                        <i slot="icon" class="ion-plus-round"></i>
+                    </toggle-button>
+
+                    <toggle-button :active="favorited" :title="'Favorite Article (' + favoritesCount + ')'" :activetitle="'Unfavorite Article (' + favoritesCount + ')'" active class="subtle green-button" #click="detailPage.favoriteArticle">
+                        <i slot="icon" class="ion-heart"></i>
+                    </toggle-button>
                 </div>
 
                 <div @if="detailPage.articleByMe" style="display: inline-block">
@@ -64,13 +64,13 @@
 
 
                 <div @if="!detailPage.articleByMe" style="display: inline-block">
-                    <button class="btn btn-sm btn-outline-secondary" #click="detailPage.followAuthor">
-                        <i class="ion-plus-round"></i>&nbsp; Follow ${author.username}
-                    </button>
-                    &nbsp;
-                    <button class="btn btn-sm btn-outline-primary" #click="detailPage.favoriteArticle">
-                        <i class="ion-heart"></i>&nbsp; Favorite Post <span class="counter">(${favoritesCount})</span>
-                    </button>
+                    <toggle-button :active="author.following" :title="'Follow ' + author.username" :activetitle="'Unfollow ' + author.username" #click="detailPage.followAuthor">
+                        <i slot="icon" class="ion-plus-round"></i>
+                    </toggle-button>
+
+                    <toggle-button :active="favorited" :title="'Favorite Article (' + favoritesCount + ')'" :activetitle="'Unfavorite Article (' + favoritesCount + ')'" active class="green-button" #click="detailPage.favoriteArticle">
+                        <i slot="icon" class="ion-heart"></i>
+                    </toggle-button>
                 </div>
 
                 <div @if="detailPage.articleByMe" style="display: inline-block">
