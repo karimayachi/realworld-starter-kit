@@ -1,3 +1,23 @@
+.subtle {
+  opacity: 0.8;
+}
+.subtle:hover {
+  opacity: 1;
+}
+
+.grey-button {
+  --toggle-button-text: #373a3c;
+  --toggle-button-background: #fff;
+  --toggle-button-border: #ccc;
+}
+
+.green-button {
+  --toggle-button-text: #fff;
+  --toggle-button-background: #5CB85C;
+  --toggle-button-border: #5CB85C;
+  --toggle-button-hover-background: #449d44;
+}
+
 /* LOADER, copied from: https://projects.lukehaas.me/css-loaders/
 */
 
