@@ -4,7 +4,7 @@ import { Article } from '../model/article';
 import { Comment } from '../model/comment';
 import { app } from '../index';
 import { Converter } from 'showdown';
-import { User } from 'model/user';
+import { User } from '../model/user';
 
 export class ArticleDetailsViewModel {
     @observable html: string;
@@ -37,13 +37,13 @@ export class ArticleDetailsViewModel {
     }
 
     deleteArticle = (): void => {
-        del('/articles/' + this.article?.slug).then((): void => {
+        del<Article>('/articles/' + this.article?.slug, {}).then((): void => {
             document.location.href = '/#/';
         });
     }
 
     postComment = (): void => {
-        post(`/articles/${this.article!.slug}/comments`, this.newComment).then((comment: Comment): void => {
+        post<Comment>(`/articles/${this.article!.slug}/comments`, this.newComment, Comment, 'comment').then((comment: Comment): void => {
             this.newComment.author = app.user!;
             this.comments.unshift(this.newComment);
             this.newComment = new Comment();
@@ -51,7 +51,7 @@ export class ArticleDetailsViewModel {
     }
 
     deleteComment = (comment: Comment): void => {
-        del(`/articles/${this.article!.slug}/comments/${comment.id}`).then((): void => {
+        del<Comment>(`/articles/${this.article!.slug}/comments/${comment.id}`, {}, Comment).then((): void => {
             this.comments.remove(comment);
         });
     }
@@ -61,12 +61,12 @@ export class ArticleDetailsViewModel {
             document.location.href = '/#/login';
         }
         else if(this.article?.author.following) {
-            del(`/profiles/${this.article!.author.username}/follow`).then((author: User) => {
+            del<User>(`/profiles/${this.article!.author.username}/follow`, {}, User, 'profile').then((author: User) => {
                 this.article!.author = author;
             });
         }
         else {
-            post(`/articles/${this.article!.slug}/favorite`, {}).then((author: User) => {
+            post<User>(`/profiles/${this.article!.author.username}/follow`, {}, User, 'profile').then((author: User): void => {
                 this.article!.author = author;
             });
         }
@@ -77,12 +77,12 @@ export class ArticleDetailsViewModel {
             document.location.href = '/#/login';
         }
         else if(this.article?.favorited) {
-            del(`/articles/${this.article!.slug}/favorite`).then((article: Article) => {
+            del<Article>(`/articles/${this.article!.slug}/favorite`, {}, Article, 'article').then((article: Article) => {
                 this.article = article;
             });
         }
         else {
-            post(`/articles/${this.article!.slug}/favorite`, {}).then((article: Article) => {
+            post<Article>(`/articles/${this.article!.slug}/favorite`, {}, Article, 'article').then((article: Article) => {
                 this.article = article;
             });
         }

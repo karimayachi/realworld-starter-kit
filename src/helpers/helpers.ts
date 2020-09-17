@@ -71,16 +71,78 @@ export function deepCopyProperties(a: any, b: any): void {
     }
 }
 
-export function post(endpoint: string, data: any): Promise<any> {
-    return send(endpoint, 'post', data);
+export function post<T extends Array<any> | any>(endpoint: string, data: any, ctor?: new () => any, property?: string): Promise<T> {
+    return send(endpoint, 'post', data).then((data: any): T => {
+        if (property) {
+            data = data[property];
+        }
+
+        if (Array.isArray(data)) {
+            let items: any[] = [];
+            for (let i = 0; i < data.length; i++) {
+                if (ctor) {
+                    let item: any = new ctor();
+                    deepCopyProperties(data[i], item);
+
+                    items.push(item);
+                }
+                else {
+                    items.push(data[i]);
+                }
+            }
+            return <T>items;
+        }
+        else {
+            if (ctor) {
+                let item: any = new ctor();
+                deepCopyProperties(data, item);
+
+                return item;
+            }
+            else {
+                return data;
+            }
+        }
+    });
 }
 
 export function put(endpoint: string, data: any): Promise<any> {
     return send(endpoint, 'put', data);
 }
 
-export function del(endpoint: string): Promise<any> {
-    return send(endpoint, 'delete', {});
+export function del<T extends Array<any> | any>(endpoint: string, data: any, ctor?: new () => any, property?: string): Promise<T> {
+    return send(endpoint, 'delete', {}).then((data: any): T => {
+        if (property) {
+            data = data[property];
+        }
+
+        if (Array.isArray(data)) {
+            let items: any[] = [];
+            for (let i = 0; i < data.length; i++) {
+                if (ctor) {
+                    let item: any = new ctor();
+                    deepCopyProperties(data[i], item);
+
+                    items.push(item);
+                }
+                else {
+                    items.push(data[i]);
+                }
+            }
+            return <T>items;
+        }
+        else {
+            if (ctor) {
+                let item: any = new ctor();
+                deepCopyProperties(data, item);
+
+                return item;
+            }
+            else {
+                return data;
+            }
+        }
+    });
 }
 
 function send(endpoint: string, method: string, data: any): Promise<any> {
