@@ -1,3 +1,4 @@
+import './components/toggleButton';
 import { bind } from 'imagine';
 import { MainViewModel } from './viewmodels/main.viewmodel';
 
