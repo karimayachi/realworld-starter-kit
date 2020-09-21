@@ -26,7 +26,6 @@ export class MainViewModel {
         this.routes.set('profile', { vm: ProfileViewModel });
 
         window.addEventListener('popstate', this.changeView);
-        this.changeView();
 
         if (localStorage.getItem(TOKEN_IDENTIFIER) !== null) {
             get<User>('/user', User, 'user').then((user: User): void => {
@@ -39,7 +38,7 @@ export class MainViewModel {
         return this.user !== undefined;
     }
 
-    private changeView = (_event?: PopStateEvent): void => {
+    public changeView = (_event?: PopStateEvent): void => {
         let hash: string[] = window.location.hash.split('/');
         let route: string = hash[1] || '';
         let params: string[] = hash.slice(2);

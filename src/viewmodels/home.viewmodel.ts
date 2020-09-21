@@ -1,7 +1,8 @@
-import { observable, computed } from 'imagine';
+import { observable, computed, observe } from 'imagine';
 import { get, deepCopyProperties } from '../helpers/helpers';
 import { Article } from '../model/article';
-import { TOKEN_IDENTIFIER } from '../index';
+import { app, TOKEN_IDENTIFIER } from '../index';
+import { IObjectDidChange, IValueDidChange } from 'mobx';
 
 const PAGE_SIZE = 10;
 
@@ -34,7 +35,21 @@ export class HomeViewModel {
             });
         });
 
-        this.getArticles();
+        if(app.loggedIn) {
+            this.goToFeed();
+        }
+        else {
+            this.getArticles();
+        }
+
+        observe(app, 'loggedIn', (change: IValueDidChange<boolean>): void => {
+            if(change.newValue) {
+                this.goToFeed();
+            }
+            else {
+                this.clearFilter();
+            }
+        });
 
         get<string[]>('/tags', undefined, 'tags').then((tags: string[]): void => {
             this.tags = tags;
@@ -55,16 +70,20 @@ export class HomeViewModel {
         return pages;
     };
 
-    public clearFilter = (_vm: any, event: Event): void => {
-        event.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
+    logout = (): void => {
+        app.user = undefined;
+    }
+
+    public clearFilter = (_vm?: any, event?: Event): void => {
+        event?.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
         this.currentPage = 0;
         this.filter = '';
         this.showFeed = false;
         this.getArticles(); // observing currentPage, filter and showFeed would be a better pattern than calling getArticles every time
     }
 
-    public goToFeed = (_vm: any, event: Event): void => {
-        event.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
+    public goToFeed = (_vm?: any, event?: Event): void => {
+        event?.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
         this.currentPage = 0;
         this.filter = '';
         this.showFeed = true;
