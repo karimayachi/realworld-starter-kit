@@ -1,5 +1,5 @@
 import { observable, computed, observe } from 'imagine';
-import { get, deepCopyProperties } from '../helpers/helpers';
+import { get, deepCopyProperties, post, del } from '../helpers/helpers';
 import { Article } from '../model/article';
 import { app, TOKEN_IDENTIFIER } from '../index';
 import { IObjectDidChange, IValueDidChange } from 'mobx';
@@ -72,6 +72,24 @@ export class HomeViewModel {
 
     logout = (): void => {
         app.user = undefined;
+    }
+
+    favoriteArticle = (article: Article): void => {
+        if (!app.loggedIn) {
+            document.location.href = '/#/login';
+        }
+        else if(article.favorited) {
+            del<Article>(`/articles/${article.slug}/favorite`, {}, Article, 'article').then((newArticle: Article) => {
+                article.favorited = newArticle.favorited;
+                article.favoritesCount = newArticle.favoritesCount;
+            });
+        }
+        else {
+            post<Article>(`/articles/${article.slug}/favorite`, {}, Article, 'article').then((newArticle: Article) => {
+                article.favorited = newArticle.favorited;
+                article.favoritesCount = newArticle.favoritesCount;
+            });
+        }
     }
 
     public clearFilter = (_vm?: any, event?: Event): void => {
