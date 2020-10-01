@@ -5,6 +5,10 @@
   opacity: 1;
 }
 
+.profile-page .user-info toggle-button {
+  float: right;
+}
+
 .grey-button {
   --toggle-button-text: #373a3c;
   --toggle-button-background: #fff;

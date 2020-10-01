@@ -10,11 +10,20 @@
                     <p>
                         ${bio}
                     </p>
-                    <button class="btn btn-sm btn-outline-secondary action-btn">
-                        <i class="ion-plus-round"></i>
-                        &nbsp;
-                        Follow ${username}
-                    </button>
+
+                    <div @if="!profilePage.profileIsMe">
+                        <toggle-button :active="following" :title="'Follow ' + username" :activetitle="'Unfollow ' + username" #click="profilePage.followAuthor">
+                            <i slot="icon" class="ion-plus-round"></i>
+                        </toggle-button>
+                    </div>
+
+                    <div @if="profilePage.profileIsMe">
+                        <a class="btn btn-sm btn-outline-secondary action-btn" href="#/settings">
+                            <i class="ion-gear-a"></i>
+                            &nbsp;
+                            Edit Profile Settings
+                        </a>
+                    </div>
                 </div>
 
             </div>
@@ -46,8 +55,8 @@
                                 <a _href="'#/profile/' + author.username" class="author">${author.username}</a>
                                 <span class="date">${formattedDate}</span>
                             </div>
-                            <button class="btn btn-outline-primary btn-sm pull-xs-right">
-                                <i class="ion-heart"></i> ${favoritesCount}
+                            <button _class="favorited ? 'btn btn-primary btn-sm pull-xs-right' : 'btn btn-outline-primary btn-sm pull-xs-right'" #click="profilePage.favoriteArticle">
+                                <i class="ion-heart active"></i> ${favoritesCount}
                             </button>
                         </div>
                         <a _href="'#/article/' + slug" class="preview-link">
