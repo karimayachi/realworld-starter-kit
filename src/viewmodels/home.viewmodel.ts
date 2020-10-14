@@ -125,6 +125,8 @@ export class HomeViewModel {
     private getArticles = (): void => {
         this.loadingArticles = true;
         let offset: number = this.currentPage * PAGE_SIZE;
+        let showFeed: boolean = this.showFeed;
+        let filter: string = this.filter;
 
         let endpoint: string = this.showFeed
             ? `https://conduit.productionready.io/api/articles/feed?limit=10&offset=${offset}`
@@ -142,18 +144,20 @@ export class HomeViewModel {
         fetch(endpoint, options).then((response: Response): Promise<any> => {
             return response.json();
         }).then((data: any): void => {
-            this.totalArticles = data.articlesCount;
+            if(showFeed === this.showFeed && filter === this.filter) { // make sure there wasn't a different request in the mean time (e.g. when loggedIn state has changed)
+                this.totalArticles = data.articlesCount;
 
-            let articles: Article[] = [];
-
-            for (let articleData of data.articles) {
-                let article: Article = new Article();
-                deepCopyProperties(articleData, article);
-                articles.push(article);
+                let articles: Article[] = [];
+    
+                for (let articleData of data.articles) {
+                    let article: Article = new Article();
+                    deepCopyProperties(articleData, article);
+                    articles.push(article);
+                }
+    
+                this.articles = articles;
+                this.loadingArticles = false;
             }
-
-            this.articles = articles;
-            this.loadingArticles = false;
         });
     }
 }
