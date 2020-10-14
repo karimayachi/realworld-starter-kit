@@ -3,7 +3,6 @@ import { get, deepCopyProperties, del, post } from '../helpers/helpers';
 import { Profile } from '../model/profile';
 import { Article } from '../model/article';
 import { app, TOKEN_IDENTIFIER } from '../index';
-import { User } from 'model/user';
 
 const PAGE_SIZE = 10;
 
@@ -15,6 +14,7 @@ export class ProfileViewModel {
     @observable currentPage: number;
     @observable articles: Article[];
     @observable totalArticles: number;
+    @observable showFavorited: boolean;
 
     constructor(username?: string) {
         this.html = '';
@@ -23,6 +23,7 @@ export class ProfileViewModel {
         this.articles = [];
         this.currentPage = 0;
         this.totalArticles = 0;
+        this.showFavorited = false;
 
         fetch(`./views/profile.html`).then((response: Response): void => {
             response.text().then((text: string): void => {
@@ -50,7 +51,7 @@ export class ProfileViewModel {
         if (!app.loggedIn) {
             document.location.href = '/#/login';
         }
-        else if(this.profile!.following) {
+        else if (this.profile!.following) {
             del<Profile>(`/profiles/${this.profile!.username}/follow`, {}, Profile, 'profile').then((profile: Profile) => {
                 this.profile = profile;
             });
@@ -66,7 +67,7 @@ export class ProfileViewModel {
         if (!app.loggedIn) {
             document.location.href = '/#/login';
         }
-        else if(article.favorited) {
+        else if (article.favorited) {
             del<Article>(`/articles/${article.slug}/favorite`, {}, Article, 'article').then((newArticle: Article) => {
                 article.favorited = newArticle.favorited;
                 article.favoritesCount = newArticle.favoritesCount;
@@ -79,7 +80,17 @@ export class ProfileViewModel {
             });
         }
     }
-    
+
+    goToAuthorArticles = (_vm: any, event: Event): void => {
+        event.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
+        this.showFavorited = false;
+    }
+
+    goToFavoriteArticles = (_vm: any, event: Event): void => {
+        event.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
+        this.showFavorited = true;
+    }
+
     @computed get pages(): { number: number, active: boolean }[] {
         let pages: { number: number, active: boolean }[] = [];
         for (let i = 0; i < this.totalArticles / PAGE_SIZE; i++) {
@@ -100,7 +111,7 @@ export class ProfileViewModel {
                 'Authorization': 'Token ' + localStorage.getItem(TOKEN_IDENTIFIER)
             })
         }
-        
+
         /* don't use the get-helper, because we also need 'articlesCount' in the same pass.. Maybe refactor helper later to support this */
         fetch(`https://conduit.productionready.io/api/articles?limit=10&offset=${offset}&author=${this.username}`, options).then((response: Response): Promise<any> => {
             return response.json();
