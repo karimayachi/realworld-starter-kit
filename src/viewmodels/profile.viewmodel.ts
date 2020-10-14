@@ -84,11 +84,13 @@ export class ProfileViewModel {
     goToAuthorArticles = (_vm: any, event: Event): void => {
         event.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
         this.showFavorited = false;
+        this.getArticles();
     }
 
     goToFavoriteArticles = (_vm: any, event: Event): void => {
         event.preventDefault(); // Should this be part of Imagine? Would that be too opinionated?
         this.showFavorited = true;
+        this.getArticles();
     }
 
     @computed get pages(): { number: number, active: boolean }[] {
@@ -103,6 +105,9 @@ export class ProfileViewModel {
     private getArticles = (): void => {
         this.loading = true;
         let offset: number = this.currentPage * PAGE_SIZE;
+        let url: string = this.showFavorited ? 
+                          `https://conduit.productionready.io/api/articles?limit=10&offset=${offset}&favorited=${this.username}` :
+                          `https://conduit.productionready.io/api/articles?limit=10&offset=${offset}&author=${this.username}`
 
         let options: RequestInit = {};
 
@@ -113,7 +118,7 @@ export class ProfileViewModel {
         }
 
         /* don't use the get-helper, because we also need 'articlesCount' in the same pass.. Maybe refactor helper later to support this */
-        fetch(`https://conduit.productionready.io/api/articles?limit=10&offset=${offset}&author=${this.username}`, options).then((response: Response): Promise<any> => {
+        fetch(url, options).then((response: Response): Promise<any> => {
             return response.json();
         }).then((data: any): void => {
             this.totalArticles = data.articlesCount;
