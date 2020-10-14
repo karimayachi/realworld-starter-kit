@@ -8,7 +8,7 @@
             <div class="article-meta">
                 <a href=""><img _src="author.image" /></a>
                 <div class="info">
-                    <a href="" class="author">${author.username}</a>
+                    <a _href="'#/profile/' + author.username" class="author">${author.username}</a>
                     <span class="date">${formattedDate}</span>
                 </div>
 
@@ -57,7 +57,7 @@
             <div class="article-meta" @context="article">
                 <a href="profile.html"><img _src="author.image" /></a>
                 <div class="info">
-                    <a href="" class="author">${author.username}</a>
+                    <a _href="'#/profile/' + author.username" class="author">${author.username}</a>
                     <span class="date">${formattedDate}</span>
                 </div>
 
@@ -118,7 +118,7 @@
                                 <img _src="author.image" class="comment-author-img" />
                             </a>
                             &nbsp;
-                            <a href="" class="comment-author">${author.username}</a>
+                            <a _href="'#/profile/' + author.username" class="comment-author">${author.username}</a>
                             <span class="date-posted">${formattedDate}</span>
                             <span class="mod-options" @if="commentByMe">
                                 <i class="ion-trash-a" #click="detailPage.deleteComment"></i>
