@@ -44,8 +44,7 @@ export class ArticleDetailsViewModel {
 
     postComment = (): void => {
         post<Comment>(`/articles/${this.article!.slug}/comments`, this.newComment, Comment, 'comment').then((comment: Comment): void => {
-            this.newComment.author = app.user!;
-            this.comments.unshift(this.newComment);
+            this.comments.unshift(comment);
             this.newComment = new Comment();
         });
     }
