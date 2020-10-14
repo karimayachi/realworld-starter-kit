@@ -25,6 +25,9 @@ export declare class AttributeHandler implements BindingHandler {
 export declare class ScopeHandler implements BindingHandler {
     init(_element: HTMLElement, value: any, context: BindingContext, _updateValue: (value: string) => void): void;
 }
+export declare class TransformHandler implements BindingHandler {
+    init(_element: HTMLElement, value: any, context: BindingContext, _updateValue: (value: string) => void): void;
+}
 export declare class IfHandler implements BindingHandler {
     init(element: HTMLElement, _value: any, context: BindingContext, _updateValue: (value: string) => void): void;
     update(element: HTMLElement, value: string, context: BindingContext, _change: IArraySplice<any>): void;

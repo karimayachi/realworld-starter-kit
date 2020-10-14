@@ -14,6 +14,10 @@ export declare class BindingEngine {
     private rebind;
     bindInitPhase: (bindingProperties: BindingProperties, rebind?: boolean) => void;
     bindUpdatePhase: (bindingProperties: BindingProperties) => void;
+    getTransformFor: (element: HTMLElement, target: string) => Function | {
+        read: Function;
+        write: Function;
+    } | null;
     private unwrap;
 }
 export interface BindingProperties {
@@ -21,6 +25,7 @@ export interface BindingProperties {
     parameter: string;
     propertyName: string;
     scope: any;
+    vm: any;
     bindingValue: any;
     element: HTMLElement;
 }
